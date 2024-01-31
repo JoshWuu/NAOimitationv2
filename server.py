@@ -7,6 +7,7 @@ import argparse
 from naoqi import ALProxy
 import numpy as np
 
+#Program to try and visualize the angles of the arms of a person and send them to the robot
 # Global variables
 listAngles = []
 t = 0

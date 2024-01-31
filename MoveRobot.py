@@ -1,6 +1,7 @@
 import naoqi
 from naoqi import ALProxy
 import math
+#program to see the angles in the robot
 RobotIP = "salvadors-macbook-pro.local."
 RobotPort = 9559
 #Sends processed frames to the robot

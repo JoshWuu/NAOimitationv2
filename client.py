@@ -14,6 +14,7 @@ from threading import Thread
 #15 = left elbow
 #17 = left wrist
 
+#program that gets the angles and sends them to the server to send them to the robot
 
 # change the color for the labels black
 colorlabels = (0, 0, 0)
