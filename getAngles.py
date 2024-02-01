@@ -8,7 +8,7 @@ import time
 import pickle
 from threading import Thread
 
-#Program to try and visualize the angles of the arms of a person
+#Program to try and vis
 
 
 def angleRShoulderPitch(Rshoulder,Relbow): #calulates the Shoulderpitch value for the Left shoulder by using geometry
