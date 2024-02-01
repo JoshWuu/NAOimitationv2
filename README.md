@@ -38,6 +38,7 @@ The files getAngles.py and MoveRobot.py can be executed separately to verify the
 ## Enhancements
 * Improve the robot's precision.
 * Add more movements.
+* Add a GUI to control the robot's movements.
 
 ## Author
 * **Salvador Costilla Caballero**
