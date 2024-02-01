@@ -3,6 +3,9 @@ This project aims to use the Naoqi API and the Mediapipe computer vision library
 
 For the implementation of this project, I have relied on the code from https://zenodo.org/records/3935469 for the connection between the robot's movement and the computer vision part. I am continuously enhancing the code to ensure the robot can imitate movements more accurately.
 
+I also relied on Nicolas Renotes tutorial of "AI Pose Estimation with Python and MediaPipe" {href: https://www.youtube.com/watch?v=01sAkU_NvOY} to learn how to use the Mediapipe library.
+
+
 ## Requirements
 To run the code, the following must be installed on the computer:
 * Python 2.7 and 3.8 or higher
