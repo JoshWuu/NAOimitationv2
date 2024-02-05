@@ -25,6 +25,11 @@ This will start a server on the computer that will receive joint angles from the
 python3 client.py
 ```
 This will initiate a client on the robot responsible for sending joint angles to the computer so that it can forward them to the robot via the Naoqi API.
+You can also add in the terminal the route of a video file to test the robot movements with a video file with the following command or leave it empty to use the webcam as the video source:
+```bash
+python3 client.py "route of the video"
+```
+
 
 ## Operation
 The code operates as follows:

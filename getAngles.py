@@ -101,9 +101,55 @@ def angleRElbowYaw(Relbow,Rwrist,shoulderpitch): #calulates the ElbowYaw value f
         angle = - angle
         return angle
 
+def HeadYaw(head,Rshoulder,Lshoulder):
+    # middle of the shoulders
+    x1 = (Rshoulder[0] + Lshoulder[0]) / 2
+    z1 = (Rshoulder[2] + Lshoulder[2]) / 2
+    # coordinates of the head
+    x2 = head[0]
+    z2 = head[2]
+    #vector in z direction
+    V1=[0,0,-10]
+    # vector from the middle of the shoulders to the head
+    V2 = [x2 - x1, 0, z2 - z1]
+    # calculate the angle between the two vectors
+    angle = math.acos(np.dot(V1,V2) / (np.linalg.norm(V1) * np.linalg.norm(V2)))
+    angle = math.degrees(angle)
+    if (x2 < x1):
+        angle = -angle
+    return angle
+
+def HeadPitch(head,Rshoulder,Lshoulder):
+    # middle of the shoulders
+    y1 = (Rshoulder[1] + Lshoulder[1]) / 2
+    z1 = (Rshoulder[2] + Lshoulder[2]) / 2
+    # coordinates of the head
+    y2 = head[1]
+    z2 = head[2]
+    #vector in -y direction
+    V1 = [0,-10,0]
+    # vector from the middle of the shoulders to the head
+    V2 = [0,y2 - y1, z2 - z1]
+    # calculate the angle between the two vectors
+    angle = math.acos(np.dot(V1,V2) / (np.linalg.norm(V1) * np.linalg.norm(V2)))
+    angle = math.degrees(angle)
+    # calibrate the angle
+    angle = angle - 60
+    return angle
+
+def StandingCrouching(Lhip,Lknee,Lankle,Rhip,Rknee,Rankle):
+    # calculate the angle between the leg and the floor
+    angle = math.atan((Lhip[2] - Lknee[2]) / (Lhip[1] - Lknee[1]))
+    angle = math.degrees(angle)
+    if (angle < -60):
+        angle = 0
+    else:
+        angle = 1
+    return angle
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
+# cap = cv2.VideoCapture("arms.mov")
 cap = cv2.VideoCapture(0)
 
 #12 = right shoulder
@@ -158,43 +204,72 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             #             cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
  
 
+            #get head coordinates
+            head = [landmarks[mp_pose.PoseLandmark.NOSE.value].x,landmarks[mp_pose.PoseLandmark.NOSE.value].y,landmarks[mp_pose.PoseLandmark.NOSE.value].z]
+            #these coordinates are to simulate standing up and crouching position
+            # get coordinates of the left leg
+            Lhip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].z]
+            Lknee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].z]
+            Lankle = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y,landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].z]
+            # get coordinates of the right leg
+            Rhip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y,landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].z]
+            Rknee = [landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].y,landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].z]
+            Rankle = [landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].y,landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].z]
+            # calculate angle standing or crouching
+            angleStandingCrouching = StandingCrouching(Lhip,Lknee,Lankle,Rhip,Rknee,Rankle)
+            # Visualize angle with bigger letters
+            cv2.putText(image, f"StandingCrouching: {angleStandingCrouching:.2f} degrees",
+                        [10,210],
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
+            
 
-
-
+            # calculate angle HeadYaw
+            angleHeadYawDegrees = HeadYaw(head,Rshoulder,Lshoulder)
+            # Visualize angle with bigger letters
+            cv2.putText(image, f"HeadYaw: {angleHeadYawDegrees:.2f} degrees",
+                        [10,150],
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
+            
+            # calculate angle HeadPitch
+            angleHeadPitchDegrees = HeadPitch(head,Rshoulder,Lshoulder)
+            # Visualize angle with bigger letters
+            cv2.putText(image, f"HeadPitch: {angleHeadPitchDegrees:.2f} degrees",
+                        [10,180],
+                        cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
+            
             # calculate angle RShoulderPitch
             angleRShoulderPitchDegrees = angleRShoulderPitch(Rshoulder, Relbow)
             # Visualize angle with bigger letters
             cv2.putText(image, f"Right Shoulder Pitch: {angleRShoulderPitchDegrees:.2f} degrees", 
-            tuple(np.multiply([Rshoulder[0], Rshoulder[1]], [640, 480]).astype(int)), 
+            [10, 30], 
             cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
 
             # calculate angle RShoulderRoll
             angleRShoulderRollDegrees = angleRShoulderRoll(Rshoulder, Relbow)
             # Visualize angle with bigger letters
             cv2.putText(image, f"Right ShoulderRoll: {angleRShoulderRollDegrees:.2f} degrees",
-                        tuple(np.multiply([Rshoulder[0], Rshoulder[1]], [640, 580]).astype(int)),
+                        [10,60],
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
              # # calculate angle RElbowRoll
             angleRElbowRollDegrees = angleRElbowRoll(Rshoulder, Relbow, Rwrist)
             # Visualize angle with bigger letters
             cv2.putText(image, f"Right ElbowRoll: {angleRElbowRollDegrees:.2f} degrees",
-                        tuple(np.multiply([Relbow[0], Relbow[1]], [640, 680]).astype(int)),
+                        [10,90],
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
             # calculate angle RElbowYaw
             angleRElbowYawDegrees = angleRElbowYaw(Relbow,Rwrist, angleRShoulderPitchDegrees)
             # Visualize angle with bigger letters
             cv2.putText(image, f"Right ElbowYaw: {angleRElbowYawDegrees:.2f} degrees",
-                        tuple(np.multiply([Relbow[0], Relbow[1]], [640, 780]).astype(int)),
+                        [10,120],
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
-           
-
+            
 
 
         except Exception as e:
             print(e)
             pass
-        
-        
+        #delay for 0.5 seconds
+        # time.sleep(0.5)
         # Render detections
         mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
                                 mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
