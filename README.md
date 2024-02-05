@@ -20,11 +20,11 @@ To execute the code, the robot must be connected to the same network as the comp
 ```bash
 python2 server.py
 ```
-This will start a server on the computer that will receive joint angles from the robot and send them for the robot to move. Subsequently, on the robot, execute the following command:
+This will start a server on the computer that will receive joint angles from the client and send them for the robot to move using NAOqi APS. Subsequently, on another terminal, the following command should be run:
 ```bash
 python3 client.py
 ```
-This will initiate a client on the robot responsible for sending joint angles to the computer so that it can forward them to the robot via the Naoqi API.
+This will initiate a client on the computer responsible for sending the joint angles to the server.
 You can also add in the terminal the route of a video file to test the robot movements with a video file with the following command or leave it empty to use the webcam as the video source:
 ```bash
 python3 client.py "route of the video"

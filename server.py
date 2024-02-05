@@ -12,6 +12,7 @@ import numpy as np
 # Global variables
 listAngles = []
 t = 0
+# change the IP to the IP of the robot or the IP of the computer that is running the simulator
 RobotIP = "192.168.171.141"
 # RobotIP = "salvadors-macbook-pro.local."
 RobotPort = 9559
