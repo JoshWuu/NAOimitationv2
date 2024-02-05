@@ -33,12 +33,13 @@ python3 client.py "route of the video"
 
 ## Operation
 The code operates as follows:
-* The robot sends joint angles to the computer.
+* The computer captures the video and extracts the joint angles.
 * The computer receives the angles and sends them to the robot.
 * The robot receives the angles and moves accordingly.
 
 ## Extras
 The files getAngles.py and MoveRobot.py can be executed separately to verify the robot's correct movement. The former is auxiliary for visualizing the robot's joint angles, and the latter is responsible for moving the robot using hardcoded angles.
+getAnglesNew.py was used to draw on the screen the angles of the human pose. Adding formating and colors to the angles just as text.
 
 ## Enhancements
 * Improve the robot's precision.
