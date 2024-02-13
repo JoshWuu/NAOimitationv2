@@ -13,8 +13,10 @@ import numpy as np
 listAngles = []
 t = 0
 # change the IP to the IP of the robot or the IP of the computer that is running the simulator
-RobotIP = "192.168.171.141"
+# RobotIP = "192.168.171.141"
+# RobotIP = "192.168.171.148"
 # RobotIP = "salvadors-macbook-pro.local."
+RobotIP = ""
 RobotPort = 9559
 #Sends processed frames to the robot
 def sendrobot(anglelist, robotIP="192.168.171.141", PORT=9559):
@@ -55,7 +57,6 @@ def sendrobot(anglelist, robotIP="192.168.171.141", PORT=9559):
         isAbsolute = True #  joint positions absolute and not relative
         print(angleLists)
         motionProxy.angleInterpolation(names, angleLists, timeLists, isAbsolute) #the function= talks with the robot
-      
         print "done"
         t += 1 
     except Exception: # checks for any and all errors
@@ -69,7 +70,9 @@ def sendrobot(anglelist, robotIP="192.168.171.141", PORT=9559):
 
 
 
-def ConnectionServer():
+def ConnectionServer(ipaddresss):
+    global RobotIP
+    RobotIP = ipaddresss
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -116,7 +119,11 @@ def ConnectionServer():
 
 
 
-if __name__ == '__main__':
-    ConnectionServer()
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        ConnectionServer(sys.argv[1])
+    else:
+        ConnectionServer("salvadors-macbook-pro.local.")
     
 

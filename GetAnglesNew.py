@@ -3,7 +3,22 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+import matplotlib.pyplot as plt
 import sys
+import time
+import random
+def plotsomethinginrandom3d(fig):
+    x=np.random.rand(10)
+    y=np.random.rand(10)
+    z=np.random.rand(10)
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_zlabel('Z Label')
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(x, y, z, c='r', marker='o')
+    plt.show()
+    print(x,y,z)    
+
 def angle_between_vectors(v1, v2, normal_vector):
     v1 = np.array(v1)
     v2 = np.array(v2)
@@ -52,7 +67,7 @@ def LandMarksCapture(video):
 
 
     ## Setup mediapipe instance
-    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5,model_complexity=2) as pose:
         while True:
             ret, frame = cap.read()
             # Flip the frame horizontally
@@ -88,14 +103,12 @@ def LandMarksCapture(video):
                 RHip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x,landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y,landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].z]
 
 
-                # calculate angle RShoulderPitch
-                angleRShoulderPitchDegrees = angleRShoulderPitch(Lshoulder,RHip,Rshoulder, Relbow)
-
 
                 # NOTE Calculations for the right arm
-                # calculate angle RShoulderPitch
 
-                angleRShoulderPitchDegrees = 100
+
+                # calculate angle RShoulderPitch
+                angleRShoulderPitchDegrees = angleRShoulderPitch(Lshoulder,RHip,Rshoulder,Relbow)
                 # Visualize angle with bigger letters
                 cv2.putText(image, f"Right Shoulder Pitch: {angleRShoulderPitchDegrees:.2f} deg",
                             [100,50],cv2.FONT_HERSHEY_SIMPLEX, 1.0, colorlabels, 2, cv2.LINE_AA)
@@ -177,6 +190,11 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         LandMarksCapture(sys.argv[1])
     else:
-        LandMarksCapture(0)
-    # LandMarksCapture(0) # use this line to use the webcam
+        fig = plt.figure()
+        plotsomethinginrandom3d(fig)
+        time.sleep(5)
+        plotsomethinginrandom3d(fig)
+
+           # LandMarksCapture(0) # use this line to use the webcam
     # LandMarksCapture("nameofvideo.mp4") # use this line to use a video
+

@@ -275,7 +275,7 @@ def LandMarksCapture(getcamera):
     mp_pose = mp.solutions.pose  # Mediapipe Solutions
     cap = cv2.VideoCapture(getcamera)
     font_size = 0.7
-    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+    with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5, model_complexity=2) as pose:
         # NOTE: Descomentar para la conexión
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = ('localhost', 10000)
