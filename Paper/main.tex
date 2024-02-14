@@ -25,9 +25,8 @@ salvadorcoscab@gmail.com}
 \maketitle
 
 \begin{abstract}
-In this project we made a NAO robot, from Aldebaran, move imitating human movements. This movements were captured with a webcam using Mediapipe.
-Though this human imitation has already been done, we wanted to make it in a different way. Because most of the other projects use multiple cameras or depth sensors, such as the LIDAR sensor. 
-The project is way far from being finished, because the robot only moves his arms and not very precisely. But we think is a good start for future work on computer vision and robotics.
+In this project, we programmed a NAO robot from Aldebaran to mimic human movements captured by a webcam using Mediapipe. While this type of human imitation has been done before, we aimed to approach it differently. Unlike most other projects utilizing multiple cameras or depth sensors like the LIDAR sensor, our focus was on a novel methodology.
+The project is still in progress, with the robot currently capable of moving its arms, albeit not with high precision. Nonetheless, we see this as a promising starting point for future developments in computer vision and robotics.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -35,58 +34,49 @@ NAO, Mediapipe, Human imitation, aldebaran, robotics
 \end{IEEEkeywords}
 % State of the art
 \section{State of the art}
-In this section we will describe different ways to move a NAO robot the Mediapipe Framework and a work related to human imitation using the NAO robot.
- 
-The NAO robot docomentation  \cite{b1} states that there is two ways to move the NAO robot to do poses. The first one is using the angles from the joints and the second one is using inverse kinematics. Though there is more ways to move the robot, those are more for walking or to perform a predefined pose.
+In this section, we will explore various methods for controlling the movement of a NAO robot using the Mediapipe Framework, as well as discuss related work involving human imitation with the NAO robot.
 
-There is  two ways to control the effectors to perform a pose, regardless we use inverse kinematics or not, which are:
+According to the NAO robot documentation \cite{b1}, there are two primary methods for posing the NAO robot: using joint angles and employing inverse kinematics. While other methods exist for walking or performing predefined poses, these two are fundamental to our project's scope.
+
+Regardless of whether inverse kinematics is employed, there are two main ways to control the effectors to achieve a pose:
 \begin{itemize}
-    \item Animation methods, in which the time is fixed and there are blocking functions.
-    \item Reactive methods, that can be used to control the robot in real time, and there are non-blocking functions.
+    \item Animation methods, which operate within fixed time frames and involve blocking functions.
+    \item Reactive methods, suitable for real-time control with non-blocking functions.
 \end{itemize}
 
-We have various functions contained in the \textit{ALMotionProxy} module, related to the movement by controlling the joints some of the animation methods are:
+Within the \textit{ALMotionProxy} module, numerous functions pertain to joint movement. Some notable animation methods include:
 \begin{itemize}
-    \item \textit{ALMotionProxy.angleInterpolation}, that allows you to move the robot from a specific position to another in a specific time.
-    \item \textit{ALMotionProxy.angleInterpolationWithSpeed}, that allows you to move the robot from a specific position to another in a specific time and speed.
+    \item \textit{ALMotionProxy.angleInterpolation}, enabling movement from one specific position to another within a specified time.
+    \item \textit{ALMotionProxy.angleInterpolationWithSpeed}, facilitating movement between specific positions within defined time and speed parameters.
 \end{itemize}
-One important method is:
+An essential method is:
 \begin{itemize}
-    \item \textit{ALMotionProxy.setAngles}, that allows you to move set the angles of a single joint or a set of joints of the robot.
-\end{itemize}
-
-As it was stated before the robot can be controlled using inverse kinematics as well, in this case a classical IK solver which uses only the joints of the effector chain to reach a target and a generalized IK solver (also called Whole Body control) which uses all the robot joints to reach a target.
-Some of the animation and reactive methods related to the inverse kinematics that we consider important are:
-\begin{itemize}
-    \item \textit{ALMotionProxy.positionInterpolation} that allows you to move the robot from a specific position to another in a specific time 
-    \item \textit{ALMotionProxy.setPosition}, that allows you to move the robot to a specific position in a 3d space.
+\item \textit{ALMotionProxy.setAngles}, enabling the manipulation of single joint angles or sets of joint angles on the robot.
 \end{itemize}
 
+Furthermore, the robot's control extends to inverse kinematics. Here, classical IK solvers and generalized IK solvers (Whole Body control) are employed. Some pertinent animation and reactive methods related to inverse kinematics include:
+\begin{itemize}
+    \item \textit{ALMotionProxy.positionInterpolation}, facilitating movement between specific positions within a specified time frame.
+    \item \textit{ALMotionProxy.setPosition}, enabling precise positioning of the robot in 3D space.
+\end{itemize}
 
+BlazePose \cite{b2} is an architecture for single-person 3D pose detection based on convolutional neural networks. It is integrated into the Mediapipe framework, enabling the detection of poses from videos or images. The model is capable of detecting 33 landmarks (see Figure \ref{fig:landmarksMP}), which can be interpreted as points in a 3D space.
 
-BlazePose \cite{b2}, is and architecture for single person 3D pose detection based in convolutional neural networks. It is available in the Mediapipe framework. And allows you to detect poses from a video or an image.
-There are 33 landmarks that the BlazePose model can detect (See figure \ref{fig:landmarksMP}). 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.48\textwidth]{images/landmarksMP.jpeg}}
-    \caption{Landmarks from the Mediapipe library.}
-    \label{fig:landmarksMP}
+\centerline{\includegraphics[width=0.48\textwidth]{images/landmarksMP.jpeg}}
+\caption{Landmarks from the Mediapipe library.}
+\label{fig:landmarksMP}
 \end{figure}
-These landmarks can be read as a set of points in a 3D space.
-The Landmarker has various configuration options, such as:
+
+The Landmarker offers various configuration options, including:
+
 \begin{itemize}
-\item \textit{model\_complexity},  that allows you to choose between three different models, the lite, the full and the heavy. Depending on the model chosen the accuracy and the speed can increase.
-\item \textit{min\_detection\_confidence}, that allows you to set the minimum confidence that a pose is detected.
-\item \textit{min\_tracking\_confidence}, that allows you to set the minimum confidence that a pose is tracked.
+\item \textit{model\_complexity}, This parameter allows selection among three different models - lite, full, and heavy. Depending on the chosen model, both accuracy and speed can vary.
+\item \textit{min\_detection\_confidence}, It enables setting the minimum confidence level required for detecting a pose.
+\item \textit{min\_tracking\_confidence}, This parameter allows setting the minimum confidence level required for tracking a pose.
 \end{itemize}
 
-
-
-In a thesis called "
-Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad"\cite{b3} the authors use the NAO robot to imitate the movements of a human using a kinect sensor. 
-They use a client-server approach to send the data from the kinect sensor to the robot through the NAOqi API.
-In the client part they use the \textit{pykinect2} library to get the data from the kinect sensor, this data are 25 landmarks that represent the human body. These data is then sent to the server part using the \textit{socket} library.
-In the server part they calculate the angles between the joints and then send them to the robot using the \textit{ALMotionProxy.AngleInterpolation} method.
-
+In a thesis titled "Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad" \cite{b3}, the authors utilize the NAO robot to mimic human movements using a Kinect sensor. They adopt a client-server approach to transmit data from the Kinect sensor to the robot via the NAOqi API. In the client-side implementation, they employ the \textit{pykinect2} library to retrieve data from the Kinect sensor, which consists of 25 landmarks representing the human body. This data is then relayed to the server-side using the \textit{socket} library. On the server-side, the angles between the joints are computed and transmitted to the robot using the \textit{ALMotionProxy.AngleInterpolation} method.
 % intrduccion: poner en contexto al lector sobre el tema
 % Se describe el orden de los estudios
 % revisar el proyecto del kinect 

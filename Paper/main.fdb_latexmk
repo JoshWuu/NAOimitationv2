@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1707928447 "/Users/salvatorecoscab/Documents/appliedRobotics/NAOimitation/NAOimitationv2/Paper/main.tex" "main.pdf" "main" 1707928447
-  "/Users/salvatorecoscab/Documents/appliedRobotics/NAOimitation/NAOimitationv2/Paper/main.tex" 1707928446 18739 a2161922e4087609928ede9878286034 ""
+["pdflatex"] 1707931939 "/Users/salvatorecoscab/Documents/appliedRobotics/NAOimitation/NAOimitationv2/Paper/main.tex" "main.pdf" "main" 1707931939
+  "/Users/salvatorecoscab/Documents/appliedRobotics/NAOimitation/NAOimitationv2/Paper/main.tex" 1707931938 18538 28ed78f07a5dc0dd092f53d5ed3402ea ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -75,8 +75,8 @@
   "images/RobotSimulation.png" 1707925037 1822377 6fb10627a7ec2f35590be7ac96a37476 ""
   "images/RobotWorking.png" 1707924498 748823 305aab6225eced12e523210fd98c6b02 ""
   "images/landmarksMP.jpeg" 1707584578 194914 0d9e160d6bf3fcff2ecbf4ec2da10697 ""
-  "main.aux" 1707928447 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "main.tex" 1707928446 18739 a2161922e4087609928ede9878286034 ""
+  "main.aux" 1707931939 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.tex" 1707931938 18538 28ed78f07a5dc0dd092f53d5ed3402ea ""
   (generated)
   "main.aux"
   "main.log"
