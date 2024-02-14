@@ -25,10 +25,9 @@ salvadorcoscab@gmail.com}
 \maketitle
 
 \begin{abstract}
-
-    In this project I made a NAO robot, from Aldebaran, move imitating human movements. This movements were captured with a webcam using Mediapipe.
-    Though this human imitation has already been done, I wanted to make it in a different way. Because most of the other projects use multiple cameras or depth sensors, such as the LIDAR sensor. 
-    The project is way far from being finished, because the robot only moves his hands and not very precisely. But I think is a good start for future work on computer vision and robotics.
+In this project we made a NAO robot, from Aldebaran, move imitating human movements. This movements were captured with a webcam using Mediapipe.
+Though this human imitation has already been done, we wanted to make it in a different way. Because most of the other projects use multiple cameras or depth sensors, such as the LIDAR sensor. 
+The project is way far from being finished, because the robot only moves his arms and not very precisely. But we think is a good start for future work on computer vision and robotics.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -36,11 +35,11 @@ NAO, Mediapipe, Human imitation, aldebaran, robotics
 \end{IEEEkeywords}
 % State of the art
 \section{State of the art}
-In this section I will describe different ways to move a NAO robot the Mediapipe Framework and a work related to human imitation using the NAO robot.
+In this section we will describe different ways to move a NAO robot the Mediapipe Framework and a work related to human imitation using the NAO robot.
  
-The NAO robot docomentation  \cite{b7} states that there is two ways to move the NAO robot to do poses. The first one is using the angles from the joints and the second one is using inverse kinematics. Though there is more ways to move the robot, those are more for walking or to perform a specific pose.
+The NAO robot docomentation  \cite{b1} states that there is two ways to move the NAO robot to do poses. The first one is using the angles from the joints and the second one is using inverse kinematics. Though there is more ways to move the robot, those are more for walking or to perform a predefined pose.
 
-There is  two way to control the effectors to perform a pose, regardless we use inverse kinematics or not, which are:
+There is  two ways to control the effectors to perform a pose, regardless we use inverse kinematics or not, which are:
 \begin{itemize}
     \item Animation methods, in which the time is fixed and there are blocking functions.
     \item Reactive methods, that can be used to control the robot in real time, and there are non-blocking functions.
@@ -57,7 +56,7 @@ One important method is:
 \end{itemize}
 
 As it was stated before the robot can be controlled using inverse kinematics as well, in this case a classical IK solver which uses only the joints of the effector chain to reach a target and a generalized IK solver (also called Whole Body control) which uses all the robot joints to reach a target.
-Some of the animation and reactive methods related to the inverse kinematics that I consider important are:
+Some of the animation and reactive methods related to the inverse kinematics that we consider important are:
 \begin{itemize}
     \item \textit{ALMotionProxy.positionInterpolation} that allows you to move the robot from a specific position to another in a specific time 
     \item \textit{ALMotionProxy.setPosition}, that allows you to move the robot to a specific position in a 3d space.
@@ -65,10 +64,10 @@ Some of the animation and reactive methods related to the inverse kinematics tha
 
 
 
-BlazePose \cite{b7}, is and architecture for single person 3D pose detection based in convolutional neural networks. It is available in the Mediapipe framwork. And allows you to detect poses from a video or an image.
+BlazePose \cite{b2}, is and architecture for single person 3D pose detection based in convolutional neural networks. It is available in the Mediapipe framework. And allows you to detect poses from a video or an image.
 There are 33 landmarks that the BlazePose model can detect (See figure \ref{fig:landmarksMP}). 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.4\textwidth]{images/landmarksMP.jpeg}}
+    \centerline{\includegraphics[width=0.48\textwidth]{images/landmarksMP.jpeg}}
     \caption{Landmarks from the Mediapipe library.}
     \label{fig:landmarksMP}
 \end{figure}
@@ -82,8 +81,9 @@ The Landmarker has various configuration options, such as:
 
 
 
-In \cite{b7} the authors use the NAO robot to imitate the movements of a human using a kinect sensor. 
-They use a client-server approach to send the data from the kinect sensor to the robot.
+In a thesis called "
+Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad"\cite{b3} the authors use the NAO robot to imitate the movements of a human using a kinect sensor. 
+They use a client-server approach to send the data from the kinect sensor to the robot through the NAOqi API.
 In the client part they use the \textit{pykinect2} library to get the data from the kinect sensor, this data are 25 landmarks that represent the human body. These data is then sent to the server part using the \textit{socket} library.
 In the server part they calculate the angles between the joints and then send them to the robot using the \textit{ALMotionProxy.AngleInterpolation} method.
 
@@ -102,18 +102,18 @@ In the server part they calculate the angles between the joints and then send th
 
 \subsection{Objectives}
 
-During this project I had some objectives which were:
+During this project we had some objectives which were:
 \begin{itemize}
 \item Solve the computer vision part, that in this case was done with Mediapipe.
 \item Make the robot move using the NAOqi API.
 
 \end{itemize}
-The problems were that, in order to work with the NAOqi API, I had to download and setup the SDK which is written (by the moment of this project) in Python 2.7 and the Mediapipe is only availble in Python 3.7 or higher. That is why I had to add as an objective to make the two libraries work together.
+The problems were that, in order to work with the NAOqi API, we had to download and setup the SDK which is written (by the moment of this project) in Python 2.7 and the Mediapipe is only availble in Python 3.7 or higher. That is why we had to add as an objective to make the two libraries work together.
 
 
 % Methodology
 \subsection{Methodology}
-The methodology that I used to solve the objectives above was to first divide the problem into modules and tried to solve them separately, and then join them together and solve the problems that arose from the connection between the two modules.
+The methodology that we used to solve the objectives above was to first divide the problem into modules and try to solve them separately, and then join them together and solve the problems that arose from the connection between the two modules.
 The main two modules were the computer vision and the robot movement.
 
 
@@ -121,44 +121,44 @@ The main two modules were the computer vision and the robot movement.
 % Begin with the computer vision part and the NAOqi API part
 In the beginning, the computer vision part was done very easily, because Mediapipe has a lot of usage examples and good documentation. On the other hand working with the NAO robot was a much more difficult.
 \\
-For the computer vision part I used the opencv library to get images from both camera and videos and then I used the Mediapipe library to get the poses from the images.
-I used also the opencv library to plot the landmarks that the Mediapipe library detected, so I could see how the landmarks were being detected. This landmarks conform an object with 33 points, which represents landmarks of the human body. (See figure \ref{fig:landmarksMP})
+For the computer vision part we used the opencv library to get images from both camera and videos and then we used the Mediapipe library to get the poses from the images.
+We used also the opencv library to plot the landmarks that the Mediapipe library detected, so  we could see how the landmarks were being detected. This landmarks conformed an object with 33 points, which represents landmarks of the human body. (See figure \ref{fig:landmarksMP})
 
 
 \subsection{Robot movement}
 
-Then I started working with the robot movement part, to do this I used the NAOqi API. I realized, after reading the NAOqi documentation that there is two ways to control the robot for doing poses. The first one was using angles and the second one was using inverse kinematics. 
-I decided to use the first one because I thought that with the landmarks, obtained with Mediapipe, I could easily get the angles of each join of the robot, and also the project that I found on internet used this approach.
+Then we started working with the robot movement part, to do this we used the NAOqi API. We realized, after reading the NAOqi documentation that there is two ways to control the robot for doing poses. The first one was using angles and the second one was using inverse kinematics. 
+We decided to use the first one because we thought that with the landmarks, obtained with Mediapipe, we could easily get the angles of each join of the robot, and also the project that we found on internet used this approach.
 All of this joint-angle approach is written in the \textit{ALMotion} module of the NAOqi API. 
 In summary the robot has various joints, and each joint can be moved using a specific angle. These joints work in a similar way as the human body joints, allowing some joints to pitch, roll, and yaw. (See figure \ref{fig:RightArmAngles})
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.4\textwidth]{images/RightArmAngles.jpeg}}
+    \centerline{\includegraphics[width=0.5\textwidth]{images/RightArmAngles.jpeg}}
     \caption{Landmarks from the Mediapipe library.}
     \label{fig:RightArmAngles}
     \end{figure}
 
 % connection between the two parts
 \subsection{Connection between the Computer vision and the Robot movement}
-After doing some testing on both parts, I had to somehow connect them. In order to do the connection between the robot and the computer vision part, I tried with \textit{execnet}, which is a library that allows you to trigger python scripts from another python script, even with different versions of python. But I had some problems sending the data from the computer vision part to the part in which I move the robot, so I decided to try a different approach.
+After doing some testing on both parts, we had to somehow connect them. In order to do the connection between the robot and the computer vision part, we tried with \textit{execnet}, which is a library that allows you to trigger python scripts from another python script, even with different versions of python. But we had some problems sending the data from the computer vision part to the part in which we move the robot, so we decided to try a different approach.
 
-I decided to use sockets to send the data, as I got inspiration from a project that I found with a similiar approach, in which the author used sockets to send the data from a kinect sensor to the robot.
-This solved everything, about the connection between the scripts, because it uses the client-server approach, allowing me to use python 3.10 for the computer vision part that is the client and python 2.7 for the Robot movement part that is the server. I just had to do some encoding to send the data. 
+We decided to use sockets to send the data, as we got inspiration from a project that we found with a similiar approach, in which the author used sockets to send the data from a kinect sensor to the robot.
+This solved everything, about the connection between the scripts, because it uses the client-server approach, allowing me to use python 3.10 for the computer vision part that is the client and python 2.7 for the Robot movement part that is the server. We just had to do some encoding to send the data. 
 
 % testing the implemented code
 \subsection{Testing the implemented code and solving problems}
-After changing the code that I found to work with Mediapipe and OpenCV instead of the kinect sensor. I did some testing on the functions that were already implemented in the server side, but they performed very bad, but at least, I saw that the robot moved.
+After changing the code that we found to work with Mediapipe and OpenCV instead of the kinect sensor. We did some testing on the functions that were already implemented in the server side, but they performed very bad, but at least, we saw that the robot moved.
 
-Also the display of the images was very slow since the code had a delay to send the data, in order for the server to process it. I solved this using a thread to get the data from the displayed image and send it to the server with the thread without messing up with the display.
+Also the display of the images was very slow since the code had a delay to send the data, in order for the server to process it. We solved this using a thread to get the data from the displayed image and send it to the server with the thread without messing up with the display.
 \\
-As I said before after changing a lot the parameters and definition of the functions that were implemented before I realized that I was not sending the right data to the robot from the server, so I decided to change the approach and instead of sending the coordenates of the landmarks to the server, I decided to send the angles between them and send them directly to the server. This would help me to see what angles I was sending to the robot by showing them on the displayed image.
+As we said before after changing a lot the parameters and definition of the functions that were implemented before we realized that we was not sending the right data to the robot from the server, so we decided to change the approach and instead of sending the coordenates of the landmarks to the server, we decided to send the angles between them and send them directly to the server. This would help me to see what angles we was sending to the robot by showing them on the displayed image.
 
-After I was able to see the angles that were being sent to the robot, I realized that the angles sent were not very good in the function definition, this is because the kinect sensor and Mediapipe have different coordenate systems, so I had to change the defintion of the functions.
+After we was able to see the angles that were being sent to the robot, we realized that the angles sent were not very good in the function definition, this is because the kinect sensor and Mediapipe have different coordenate systems, so we had to change the defintion of the functions.
 \\
-This did not work very well, though the movements were more accurate, the robot was not imitating the movement of the hands perfectly. So I decided to change the function. Instead of using geometry I tried with vectors and the angles between them.
+This did not work very well, though the movements were more accurate, the robot was not imitating the movement of the hands perfectly. So we decided to change the function. Instead of using geometry we tried with vectors and the angles between them.
 
 \subsection{Vector approach}
-I saw that as I had the landmarks, that represents a point in the space, I could calculate a vector between two points (See equation \ref{eq:vector}), and I could use the angles between the vectors to move the robot (See equation \ref{eq:angle}). But then I realized that I could also calculate the angles between the projection of the vectors (See equation \ref{eq:proy}) in a generated plane from a normal vector (See equations \ref{eq:plano},\ref{eq:p},\ref{eq:p0}). I tried this for one joint, that was the right shoulder pitch. I got the normal vector from the left shoulder to the right shoulder to generate the plane, and then I got the vectors from the right shoulder to the right elbow and from the shoulder to the right hip. I projected these vectors in the generated plane and then I calculated the angles between them. 
+We saw that as we had the landmarks, that represents a point in the space, we could calculate a vector between two points (See equation \ref{eq:vector}), and we could use the angles between the vectors to move the robot (See equation \ref{eq:angle}). But then we realized that we could also calculate the angles between the projection of the vectors (See equation \ref{eq:proy}) in a generated plane from a normal vector (See equations \ref{eq:plano},\ref{eq:p},\ref{eq:p0}). We tried this for one joint, that was the right shoulder pitch. We got the normal vector from the left shoulder to the right shoulder to generate the plane, and then we got the vectors from the right shoulder to the right elbow and from the shoulder to the right hip. We projected these vectors in the generated plane and then we calculated the angles between them. 
 % ecuacion para obtener un vector entre dos puntos
 \begin{equation}\label{eq:vector}
     \vec{v} = \vec{p_2} - \vec{p_1}
@@ -191,17 +191,53 @@ I saw that as I had the landmarks, that represents a point in the space, I could
     \end{align}
  \end{subequations}
 
-I implemented a function in python to do the calculations mentioned above and this function did not work well neither when I tested it, and as could see the angles on the displayed image, I realized that the Mediapipe library did not detect the z axis very well. Then I remembered that the kinect sensor has a LIDAR sensor, that allows him to detect, not only position in x and y, but also depth in a better way than the Mediapipe library. 
-That is why I did not continue with this approach and as I did not have more time to finish the project, I decided to leave the functions that were already implemented.
+We implemented a function in python to do the calculations mentioned above and this function did not work well neither when we tested it, as we could see the angles on the displayed image, we realized that the Mediapipe library did not detect the z axis very well, even with a more complex model. Then we remembered that the kinect sensor has a LIDAR sensor, that allows him to detect, not only position in x and y, but also depth in a better way than the Mediapipe library. 
+That is why we did not continue with this approach and as we did not have more time to finish the project, we decided to leave the functions that were already implemented.
 
 % CONTRIBUCIONES
 \section{Contribution}
 % diferencias entre mi proyecto y los otros y como contribuye mi proyecto al estado del arte
 The main difference between my project and the others is that it has a different approach to solve the problem, relying only on one camera and machine learning to detect and recreate the human poses, instead of using a lot of sensors. This is a contribution to the state of the art, because it implies that if there were better machine learning models, the robot could imitate the human movements in a better way. 
+There is also a contribution to the work done before in "Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad" \cite{b3}, because we can see the angles that are being sent to the robot, which can be useful for further research.
 
 
 \section{Experiments}
 % how is the set up to do the experiments
+To do the experiments and testing we used Choreographe, which has a simulator mode, in which you can see a NAO robot and move it using the localhost as the robot IP (See figure \ref{RobotSimulation}). We used this to test the robot movements, but we also used a real robot to see the movements in a real robot (See figure \ref{RobotWorking}).
+We had a script to try the robot movments and another script just to try the computer vision part. The union of both scripts, as we said before, was done using sockets. So we had to run two scripts in the terminal, one for the server and one for the client.
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=0.48\textwidth]{images/RobotSimulation.png}}
+\caption{NAO robot in the Choreographe simulator.}
+\label{RobotSimulation}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centerline{\includegraphics[width=0.4\textwidth]{images/RobotWorking.png}}
+    \caption{NAO robot moving.}
+    \label{RobotWorking}
+    \end{figure}
+
+
+We used a webcam and videos to see the angles that are being sent to the robot. To first initaite the application you have to run the server part, using a python 2.7 interpreter. 
+This can be done using the following command, in which you have to specify the ip address of the robot as an argument:
+\begin{verbatim}
+    python2 server.py "ip_address"
+\end{verbatim}
+Then you have to run the client part, using a python 3.10 interpreter. 
+If you want to send the landmarks using a webcam you can use the following command:
+\begin{verbatim}
+    python3 client.py 
+\end{verbatim}
+On the other hand, if you want to send the landmarks using a video you can use the following command:
+\begin{verbatim}
+    python3 client.py "path_to_video"
+\end{verbatim}
+
+
+Sometimes the robot falls and if this occurs the application might not work or would stop working, so we had to be careful about this, because sudden movements of the robot could make it fall. 
+If the application stops working, there is no other option than to restart the application repeating the steps above.
+
 
 % contrains of the experiments
 % results of the experiments and description of data
@@ -212,23 +248,27 @@ The main difference between my project and the others is that it has a different
 
 
 \section{Conclusion and future work}
+Even though the project is not finished, we think is a good start for just using computer vision to apply it in robotics.
+\\
+There is a lot of work to do, such as improving the calculation of the angles or use both inverse kinematics and programming the angles to move the robot.
+\\
+In order to use the legs of the robot is necessary to do further research, because we have to consider many other things such as the mass center of the robot, and take care that the movements are not too abrupt to make the robot fall.
 
 % Acknowledgment
 \section*{Acknowledgment}
+We want to thank my proffesor, Dr. Christian Groth for helping us during the project and thank also to the Hof University of Applied Science for giving us the opportunity to work with the NAO robot, which was a great experience.
 
-The authors would like to thank the support of the Hof University of Applied Science and the support of the Applied Robotics department.
 
 % Bibliography
 
 % para citar \cite{b7}.
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+
+\bibitem{b1} NAOqi API, \textit{http://doc.aldebaran.com/2-5/naoqi/motion/index.html}
+\bibitem{b2} Mediapipe Pose Landmarking\textit{https://developers.google.com/mediapipe
+/solutions/vision/pose\_landmarker}
+\bibitem{b3}I. Irigoyen, "Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad," Trabajo Fin de Grado, Facultad de Informática, Grado de Ingeniería Informática, Universidad del País Vasco, 2020.
+
 \end{thebibliography}
 
 \end{document}
