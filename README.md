@@ -154,8 +154,8 @@ Project Link: [https://github.com/Salvatorecoscab/MachineLearningChords](https:/
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[product-screenshot]: Paper/Images/RobotSimulation.png
-[robotWorking]: Paper/Images/RobotWorking.png
+[product-screenshot]: DocImages/RobotSimulation.png
+[robotWorking]: DocImages/RobotWorking.png
 [Python.org]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
 [Naoqi.org]: https://img.shields.io/badge/Naoqi-3776AB?style=for-the-badge&logo=naoqi&logoColor=white
