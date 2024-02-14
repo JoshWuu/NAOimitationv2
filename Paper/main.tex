@@ -28,7 +28,6 @@ salvadorcoscab@gmail.com}
 In this project, we programmed a NAO robot from Aldebaran to mimic human movements captured by a webcam using Mediapipe. While this type of human imitation has been done before, we aimed to approach it differently. Unlike most other projects utilizing multiple cameras or depth sensors like the LIDAR sensor, our focus was on a novel methodology.
 The project is still in progress, with the robot currently capable of moving its arms, albeit not with high precision. Nonetheless, we see this as a promising starting point for future developments in computer vision and robotics.
 \end{abstract}
-
 \begin{IEEEkeywords}
 NAO, Mediapipe, Human imitation, aldebaran, robotics
 \end{IEEEkeywords}
@@ -63,9 +62,9 @@ Furthermore, the robot's control extends to inverse kinematics. Here, classical 
 BlazePose \cite{b2} is an architecture for single-person 3D pose detection based on convolutional neural networks. It is integrated into the Mediapipe framework, enabling the detection of poses from videos or images. The model is capable of detecting 33 landmarks (see Figure \ref{fig:landmarksMP}), which can be interpreted as points in a 3D space.
 
 \begin{figure}[htbp]
-\centerline{\includegraphics[width=0.48\textwidth]{images/landmarksMP.jpeg}}
-\caption{Landmarks from the Mediapipe library.}
-\label{fig:landmarksMP}
+    \label{fig:landmarksMP}
+    \centerline{\includegraphics[width=0.48\textwidth]{images/landmarksMP.jpeg}}
+    \caption{Landmarks from the Mediapipe library.}
 \end{figure}
 
 The Landmarker offers various configuration options, including:
@@ -89,7 +88,6 @@ In a thesis titled "Mimetización de movimiento por robot antropomorfo basado en
 
 
 \section{Approach}
-
 \subsection{Objectives}
 
 During this project we had some objectives which were:
@@ -123,17 +121,17 @@ All of this joint-angle approach is written in the \textit{ALMotion} module of t
 In summary the robot has various joints, and each joint can be moved using a specific angle. These joints work in a similar way as the human body joints, allowing some joints to pitch, roll, and yaw. (See figure \ref{fig:RightArmAngles})
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=0.5\textwidth]{images/RightArmAngles.jpeg}}
-    \caption{Landmarks from the Mediapipe library.}
     \label{fig:RightArmAngles}
-    \end{figure}
+    \centerline{\includegraphics[width=0.5\textwidth]{images/RightArmAngles.jpeg}}
+    \caption{Joints in the arm of the NAO robot.}
+\end{figure}
 
 % connection between the two parts
 \subsection{Connection between the Computer vision and the Robot movement}
 After doing some testing on both parts, we had to somehow connect them. In order to do the connection between the robot and the computer vision part, we tried with \textit{execnet}, which is a library that allows you to trigger python scripts from another python script, even with different versions of python. But we had some problems sending the data from the computer vision part to the part in which we move the robot, so we decided to try a different approach.
 
 We decided to use sockets to send the data, as we got inspiration from a project that we found with a similiar approach, in which the author used sockets to send the data from a kinect sensor to the robot.
-This solved everything, about the connection between the scripts, because it uses the client-server approach, allowing me to use python 3.10 for the computer vision part that is the client and python 2.7 for the Robot movement part that is the server. We just had to do some encoding to send the data. 
+This solved everything, about the connection between the scripts, because it uses the client-server approach, allowing us to use python 3.10 for the computer vision part that is the client and python 2.7 for the Robot movement part that is the server. We just had to do some encoding to send the data. 
 
 % testing the implemented code
 \subsection{Testing the implemented code and solving problems}
@@ -141,7 +139,7 @@ After changing the code that we found to work with Mediapipe and OpenCV instead 
 
 Also the display of the images was very slow since the code had a delay to send the data, in order for the server to process it. We solved this using a thread to get the data from the displayed image and send it to the server with the thread without messing up with the display.
 \\
-As we said before after changing a lot the parameters and definition of the functions that were implemented before we realized that we was not sending the right data to the robot from the server, so we decided to change the approach and instead of sending the coordenates of the landmarks to the server, we decided to send the angles between them and send them directly to the server. This would help me to see what angles we was sending to the robot by showing them on the displayed image.
+As we said before after changing a lot the parameters and definition of the functions that were implemented before we realized that we was not sending the right data to the robot from the server, so we decided to change the approach and instead of sending the coordenates of the landmarks to the server, we decided to send the angles between them and send them directly to the server. This would help us to see what angles we was sending to the robot by showing them on the displayed image.
 
 After we was able to see the angles that were being sent to the robot, we realized that the angles sent were not very good in the function definition, this is because the kinect sensor and Mediapipe have different coordenate systems, so we had to change the defintion of the functions.
 \\
@@ -187,7 +185,7 @@ That is why we did not continue with this approach and as we did not have more t
 % CONTRIBUCIONES
 \section{Contribution}
 % diferencias entre mi proyecto y los otros y como contribuye mi proyecto al estado del arte
-The main difference between my project and the others is that it has a different approach to solve the problem, relying only on one camera and machine learning to detect and recreate the human poses, instead of using a lot of sensors. This is a contribution to the state of the art, because it implies that if there were better machine learning models, the robot could imitate the human movements in a better way. 
+The main difference between our project and the others is that it has a different approach to solve the problem, relying only on one camera and machine learning to detect and recreate the human poses, instead of using a lot of sensors. This is a contribution to the state of the art, because it implies that if there were better machine learning models, the robot could imitate the human movements in a better way. 
 There is also a contribution to the work done before in "Mimetización de movimiento por robot antropomorfo basado en imágenes de sensor de profundidad" \cite{b3}, because we can see the angles that are being sent to the robot, which can be useful for further research.
 
 
@@ -246,7 +244,7 @@ In order to use the legs of the robot is necessary to do further research, becau
 
 % Acknowledgment
 \section*{Acknowledgment}
-We want to thank my proffesor, Dr. Christian Groth for helping us during the project and thank also to the Hof University of Applied Science for giving us the opportunity to work with the NAO robot, which was a great experience.
+We want to thank our proffesor, Dr. Christian Groth for helping us during the project and thank also to the Hof University of Applied Science for giving us the opportunity to work with the NAO robot, which was a great experience.
 
 
 % Bibliography
@@ -263,5 +261,6 @@ NicholasRenotte.
 
 
 \end{thebibliography}
+
 
 \end{document}
