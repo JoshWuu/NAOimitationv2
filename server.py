@@ -16,21 +16,21 @@ t = 0
 # RobotIP = "192.168.171.141"
 # RobotIP = "192.168.171.148"
 # RobotIP = "salvadors-macbook-pro.local."
-RobotIP = ""
+RobotIP = "129.97.71.20"
 RobotPort = 9559
 #Sends processed frames to the robot
-def sendrobot(anglelist, robotIP="192.168.171.141", PORT=9559):
+def sendrobot(anglelist, robotIP="129.97.71.20", PORT=9559):
     try:
         try:
             motionProxy = ALProxy("ALMotion", robotIP, PORT) #creates proxy to call specific functions
-        except Exception, e:
-            print "Could not create proxy to AlMotion"
-            print "Error was: ", e
+        except Exception as e:
+            print("Could not create proxy to AlMotion")
+            print("Error was: ", e)
         try:
             postureProxy = ALProxy("ALRobotPosture", robotIP, PORT) #creates proxy to call specific functions
-        except Exception, e:
-            print "Could not create proxy to ALRobotPosture"
-            print "Error was: ", e
+        except Exception as e:
+            print("Could not create proxy to ALRobotPosture")
+            print("Error was: ", e)
 
         global t # uses global variable t
 
@@ -57,10 +57,10 @@ def sendrobot(anglelist, robotIP="192.168.171.141", PORT=9559):
         isAbsolute = True #  joint positions absolute and not relative
         print(angleLists)
         motionProxy.angleInterpolation(names, angleLists, timeLists, isAbsolute) #the function= talks with the robot
-        print "done"
+        print("done")
         t += 1 
-    except Exception: # checks for any and all errors
-        pass # ignores every single one of them, except keyboardInterupt and SystemExit
+    except Exception as e: # checks for any and all errors
+        print("Exception occurred:", e)
         postureProxy.goToPosture("Crouch", 1.0) # set the robot in its initial position
         motionProxy.setStiffnesses("Body", 0.0) # stiffen the joints
     except (KeyboardInterrupt, SystemExit): # when the program gets terminated
@@ -78,7 +78,7 @@ def ConnectionServer(ipaddresss):
 
     # Bind the socket to the port
     server_address = ('localhost', 10000)
-    print >>sys.stderr, 'starting up on %s port %s' % server_address
+    print('starting up on %s port %s' % server_address, file=sys.stderr)
     sock.bind(server_address)
 
 
@@ -87,7 +87,7 @@ def ConnectionServer(ipaddresss):
     connection, address = sock.accept()
     
     # Client conected
-    print >>sys.stderr, 'cliente conectado'
+    print('cliente conectado', file=sys.stderr)
 
     temp = 0
 
@@ -125,5 +125,5 @@ if __name__ == "__main__":
         ConnectionServer(sys.argv[1])
     else:
         ConnectionServer("salvadors-macbook-pro.local.")
-    
+
 
